@@ -7,6 +7,8 @@ import java.net.URL;
 
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wirebarley.currencyCalculator.config.YamlApi;
 
 import lombok.NonNull;
@@ -21,13 +23,26 @@ public class CurrencyCalculatorService {
 	@NonNull
 	private YamlApi yamlApi;
 	
-	public String getCurrencyData() {
-		String targetUrl = yamlApi.getBaseurl() + yamlApi.getEndpoint()
-						+ "?access_key=" + yamlApi.getAccesskey();
+	public JsonNode getCurrencyData(String targetContry) throws Exception {
+		String targetUrl = yamlApi.getUrl() + "&currencies=" + targetContry;
 		
 		log.info("targetUrl = " + targetUrl);
 		
+		return callCurrencyAPI(targetUrl);
+	}
+	
+	public JsonNode getCurrencyData() throws Exception {
+		String targetUrl = yamlApi.getUrl() + "&currencies=" + String.join(",", yamlApi.getCurrencies());
+		
+		log.info("targetUrl = " + targetUrl);
+		
+		return callCurrencyAPI(targetUrl);
+	}
+	
+	public JsonNode callCurrencyAPI(String targetUrl) {
 		String result = null;
+		JsonNode currency = null;
+		
 		try {
 			URL url = new URL(targetUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -35,12 +50,15 @@ public class CurrencyCalculatorService {
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			result = br.readLine();
 			
+			ObjectMapper mapper = new ObjectMapper();
+			currency = mapper.readTree(result);
+			
 			conn.disconnect();
 			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return result;
+		return currency;
 	}
 }

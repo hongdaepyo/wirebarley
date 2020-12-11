@@ -2,3 +2,6 @@ api-info:
   accesskey: ffbd1d95d5a2324f900ff4e8e34a9aef
   baseurl: http://api.currencylayer.com/
   endpoint: live
+  currencies: [
+    KRW, JPY, PHP
+  ]

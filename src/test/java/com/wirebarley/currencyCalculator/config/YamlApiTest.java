@@ -18,8 +18,9 @@ public class YamlApiTest {
 	public void yamlApiTest() {
 		String accssKey = yamlApi.getAccesskey();
 		String baseUrl = yamlApi.getBaseurl();
+		String[] currencies = yamlApi.getCurrencies();
 		
-		log.info("accessKey = {}, baseUrl = {}", accssKey, baseUrl);
+		log.info("accessKey = {}, baseUrl = {}, currencies = {}", accssKey, baseUrl, currencies);
 		
 		assertThat(accssKey).isNotNull();
 		assertThat(accssKey.length()).isEqualTo(32);

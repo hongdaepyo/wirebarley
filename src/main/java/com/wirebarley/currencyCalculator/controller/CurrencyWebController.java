@@ -1,27 +1,29 @@
 package com.wirebarley.currencyCalculator.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.wirebarley.currencyCalculator.service.CurrencyCalculatorService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@RestController
+@Controller
 @RequestMapping
 @AllArgsConstructor
 @Log4j2
-public class CurrencyController {
+public class CurrencyWebController {
 	
 	private CurrencyCalculatorService currencyCalculatorService;
 	
 	@GetMapping("/main")
-	public String main() {
-		String result = currencyCalculatorService.getCurrencyData();
+	public String main(Model model) throws Exception {
+		JsonNode result = currencyCalculatorService.getCurrencyData();
+		model.addAttribute("test", result);
 		
-		log.debug(result);
-		return result;
+		return "main";
 	}
 }

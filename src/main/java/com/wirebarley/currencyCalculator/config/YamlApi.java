@@ -16,4 +16,9 @@ public class YamlApi {
 	private String accesskey;
 	private String baseurl;
 	private String endpoint;
+	private String[] currencies;
+	
+	public String getUrl() {
+		return this.getBaseurl() + this.getEndpoint() + "?access_key=" + this.getAccesskey();
+	}
 }

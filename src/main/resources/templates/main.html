@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>환율 계산</title>
+</head>
+<body>
+<div>
+	<div>
+		<p>환율 계산</p>
+	</div>
+	<div>
+		<div>
+			<p>송금국가</p>
+		</div>
+		<div>
+			<p>미국(USD)</p>
+		</div>
+	</div>
+	<div>
+		<div>
+			<p>수취국가</p>
+		</div>
+		<div>
+			<select>
+				<option value="KRW"/>
+				<option value="JPY"/>
+				<option value="PHP"/>
+			</select>
+		</div>
+	</div>
+	<div>
+		<div>
+			<p>환율</p>
+		</div>
+		<div>
+			<p>KRW/USD</p>
+		</div>
+	</div>
+	<div>
+		<div>
+			<p>송금액</p>
+		</div>
+		<div>
+			<input type="text"/>
+		</div>
+		<div>
+			<p>미국(USD)</p>
+		</div>
+	</div>
+</div>
+<h1>환율 계산</h1>
+<span th:text="${test}"></span><br/>
+</body>
+</html>

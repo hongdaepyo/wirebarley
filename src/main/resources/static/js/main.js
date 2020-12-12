@@ -13,6 +13,7 @@ var main = {
 		alert(1);
 	},
 	countrySelect_change : function(elem){
+		this.getCurrency(elem.value);
 	},
 	getCurrency : function(country){
 		var _this = this;

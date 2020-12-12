@@ -105,6 +105,8 @@ public class CurrencyCalculatorService {
 					lastDotPos = i;
 				}
 			}
+		} else {
+			return tempString;
 		}
 		
 		return sb.reverse().toString();

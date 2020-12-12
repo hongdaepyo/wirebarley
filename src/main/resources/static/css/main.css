@@ -1,4 +1,4 @@
-.baseDiv { width: 500px; height: 450px; margin: auto; border: 1px solid #d1d5da; border-radius: 8px; padding: 0px 40px; }
+.baseDiv { width: 500px; height: 500px; margin: auto; border: 1px solid #d1d5da; border-radius: 8px; padding: 0px 40px; }
 
 .subject { font-size: 60px; font-weight: bold; padding: 0px; margin: 20px 0px; }
 
@@ -10,3 +10,7 @@ select { height: 40px; font-size: 20px; }
 
 #sendAmount {height: 30px; font-size: 20px;}
 #submitBtn { width: 200px; height: 50px; font-size: 30px; }
+
+#resultDiv {font-size: 30px;}
+#resultDiv.error {color: red;}
+#resultDiv.success {color: black;}

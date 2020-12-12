@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wirebarley.currencyCalculator.config.YamlApi;
+import com.wirebarley.currencyCalculator.dto.ExchangeRateResponseDTO;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,11 @@ public class CurrencyCalculatorService {
 	@NonNull
 	private YamlApi yamlApi;
 	
-	public JsonNode getCurrencyData(String targetContry) throws Exception {
-		String targetUrl = yamlApi.getUrl() + "&currencies=" + targetContry;
+	public JsonNode getCurrencyData(String targetCountry) throws Exception {
+		String targetUrl = yamlApi.getUrl();
+		if (targetCountry != null && !targetCountry.equals("")) {
+			targetUrl += "&currencies=" + targetCountry;
+		}
 		
 		log.info("targetUrl = " + targetUrl);
 		
@@ -60,5 +64,49 @@ public class CurrencyCalculatorService {
 		}
 		
 		return currency;
+	}
+	
+	public ExchangeRateResponseDTO makeExchageRateResponse(JsonNode currencyData) {
+		boolean success = currencyData.get("success").booleanValue();
+		
+		if (!success) {
+			return new ExchangeRateResponseDTO(false, "", "", "");
+		}
+		
+		JsonNode exchageRateData = currencyData.get("quotes");
+		String key = exchageRateData.fieldNames().next();
+		String fromCountry = key.substring(0, 3);
+		String toCountry = key.substring(3);
+		double rate = exchageRateData.get(key).doubleValue();
+		String strRate = getStringExchangeRate(rate);
+		
+		log.info(rate);
+		
+		return new ExchangeRateResponseDTO(success, fromCountry, toCountry, strRate);
+	}
+	
+	private String getStringExchangeRate(double rate) {
+		StringBuilder sb = new StringBuilder();
+		double tempRate = (double)Math.round(rate * 100) / 100;
+		String tempString = String.format("%.2f", tempRate);
+		
+		if (tempRate > 1000) {
+			int lastDotPos = -1;
+			for (int i = tempString.length() - 1; i >= 0; i--) {
+				char ch = tempString.charAt(i);
+				
+				if (lastDotPos > 0 && (lastDotPos - i) % 3 == 0) {
+					sb.append(ch).append(',');
+				} else {
+					sb.append(ch);
+				}
+				
+				if (ch == '.') {
+					lastDotPos = i;
+				}
+			}
+		}
+		
+		return sb.reverse().toString();
 	}
 }

@@ -22,3 +22,7 @@
 `./gradlew clean build`
 
 `java -jar build/libs/wirebarley-0.0.1-SNAPSHOT.jar`
+
+-------------
+### 테스트 URL ###
+http://127.0.0.1/8080/main

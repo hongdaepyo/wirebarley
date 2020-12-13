@@ -56,7 +56,7 @@ var main = {
 	checkSubmitValidation : function(amount){
 		var result = true;
 		
-		if(isNaN(amount)) { //숫자체크
+		if(isNaN(amount) || amount == "") { //숫자체크
 			result = false;
 		} else if (amount < 0 || amount > 10000) { //금액체크
 			result = false;
